@@ -4,7 +4,6 @@ import { Picker } from "@react-native-picker/picker";
 import usePrices from "../hooks/usePrices";
 import styles from "../styles/prices";
 import Logo from "../assets/Logo-TucuTrack.png";
-import About from "../components/About";
 
 const CustomPicker = ({
   label,
@@ -67,7 +66,7 @@ const Prices = () => {
   return (
     <ScrollView
       style={styles.scrollContainer}
-      contentContainerStyle={styles.container}
+      contentContainerStyle={[styles.container, { paddingBottom: 80 }]} // Añade paddingBottom para evitar que el footer tape el contenido
     >
       <View style={styles.logoContainer}>
         <Image source={Logo} style={styles.logo} />

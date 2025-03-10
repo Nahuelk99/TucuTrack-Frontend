@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import { Link, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import About from "../components/About";
 import styles from "../styles/main";
 
 const Main = () => {
@@ -51,7 +50,6 @@ const Main = () => {
             description="Función próximamente."
           />
         </View>
-        <About />
       </View>
     </ScrollView>
   );
