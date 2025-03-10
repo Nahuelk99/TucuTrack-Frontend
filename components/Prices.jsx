@@ -4,6 +4,7 @@ import { Picker } from "@react-native-picker/picker";
 import usePrices from "../hooks/usePrices";
 import styles from "../styles/prices";
 import Logo from "../assets/Logo-TucuTrack.png";
+import About from "../components/About";
 
 const CustomPicker = ({
   label,

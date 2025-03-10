@@ -64,7 +64,6 @@ export const getPrices = async (
 
     console.log("Respuesta del servidor:", response.data);
 
-    // Retornamos directamente el objeto de respuesta que contiene precio y detalles
     return response.data;
   } catch (error) {
     console.error("Error fetching precio:", error);
@@ -85,7 +84,7 @@ export const getServiceTypesByCompanies = async (idEmpresa) => {
         IdTipoServicio: tipo.IdTipoServicio,
         IdEmpresa: tipo.IdEmpresa,
         IdEmpServ: tipo.IdEmpServ,
-        NombreTipoServicio: tipo.NombreTipoServicio, // Agregamos este campo
+        NombreTipoServicio: tipo.NombreTipoServicio,
       }));
     }
     return [];

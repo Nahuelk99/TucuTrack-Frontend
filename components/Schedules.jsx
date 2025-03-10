@@ -16,6 +16,7 @@ import {
   getScheduleTypesByCompanies,
 } from "../services/api";
 import Logo from "../assets/Logo-TucuTrack.png";
+import About from "../components/About";
 
 const CustomPicker = ({
   label,
