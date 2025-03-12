@@ -76,11 +76,7 @@ export default function Layout() {
                     <Text>Iniciar Sesión</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() =>
-                      alert(
-                        "Funcionalidad de registro estará disponible pronto."
-                      )
-                    }
+                    onPress={() => navigation.navigate("register")}
                     style={styles.registerButton}
                   >
                     <Text style={styles.registerButtonText}>Registrarse</Text>
