@@ -1,4 +1,3 @@
-// hooks/useRegister.js
 import { useState } from "react";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
@@ -43,12 +42,11 @@ export const useRegister = () => {
       return "La contraseña debe tener al menos 6 caracteres";
     }
 
-    // Todo está bien
     return null;
   };
 
   const registerWithEmail = async (name, email, password, confirmPassword) => {
-    setError(""); // Restablecer el error
+    setError("");
     setLoading(true);
 
     try {
@@ -85,7 +83,6 @@ export const useRegister = () => {
         console.log("Documento de usuario creado con éxito");
       } catch (firestoreError) {
         console.error("Error al guardar en Firestore:", firestoreError);
-        // Continuamos con el proceso aunque haya error en Firestore
       }
 
       // Cerrar sesión después del registro exitoso
@@ -94,7 +91,6 @@ export const useRegister = () => {
         console.log("Sesión cerrada con éxito");
       } catch (signOutError) {
         console.error("Error al cerrar sesión:", signOutError);
-        // Continuamos con el proceso aunque haya error al cerrar sesión
       }
 
       setLoading(false);

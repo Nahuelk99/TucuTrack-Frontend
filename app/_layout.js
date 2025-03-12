@@ -10,7 +10,7 @@ import About from "../components/About";
 export default function Layout() {
   const navigation = useNavigation();
   const [user, setUser] = useState(null);
-  /*
+
   useEffect(() => {
     // Listener de cambios de autenticación
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -34,7 +34,7 @@ export default function Layout() {
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }
-  };*/
+  };
 
   return (
     <View style={styles.container}>
@@ -66,14 +66,10 @@ export default function Layout() {
                 // Vista cuando el usuario NO está logueado
                 <View style={styles.authButtonsContainer}>
                   <TouchableOpacity
-                    onPress={() =>
-                      alert(
-                        "Funcionalidad de inicio de sesión estará disponible pronto."
-                      )
-                    }
+                    onPress={() => navigation.navigate("login")}
                     style={styles.loginButton}
                   >
-                    <Text>Iniciar Sesión</Text>
+                    <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => navigation.navigate("register")}

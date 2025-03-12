@@ -86,6 +86,7 @@ export default StyleSheet.create({
   loginLinkText: {
     color: "#4285F4", // Color azul de Google
     fontSize: 15,
+    textAlign: "center",
     fontWeight: "500",
     textDecorationLine: "underline",
   },

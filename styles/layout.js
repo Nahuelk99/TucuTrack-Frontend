@@ -41,11 +41,11 @@ export default StyleSheet.create({
     marginRight: 15,
     paddingVertical: 8,
     paddingHorizontal: 15,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
     borderRadius: 5,
   },
   loginButtonText: {
-    color: "black",
+    color: "white",
     fontWeight: "bold",
   },
   registerButton: {
@@ -53,7 +53,7 @@ export default StyleSheet.create({
     paddingHorizontal: 15,
     backgroundColor: "#28a745",
     borderRadius: 5,
-    marginRight: 26,
+    marginRight: 50,
   },
   registerButtonText: {
     color: "white",

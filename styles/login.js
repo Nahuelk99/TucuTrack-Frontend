@@ -1,0 +1,108 @@
+import { StyleSheet } from "react-native";
+
+export default StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+  },
+  mainContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+  },
+  formContainer: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center",
+    color: "#333",
+  },
+  input: {
+    backgroundColor: "white",
+    borderColor: "#ddd",
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 20,
+    fontSize: 14,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  loginButton: {
+    backgroundColor: "#4A90E2",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginBottom: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  loginButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 14,
+  },
+  googleButton: {
+    backgroundColor: "white",
+    padding: 13,
+    borderRadius: 10,
+    alignItems: "center",
+    marginBottom: 15,
+    flexDirection: "row",
+    justifyContent: "center",
+    borderColor: "#ddd",
+    borderWidth: 1,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  googleButtonText: {
+    color: "#333",
+    fontWeight: "bold",
+    fontSize: 14,
+    marginLeft: 10,
+  },
+  googleIcon: {
+    width: 24,
+    height: 24,
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 15,
+    textAlign: "center",
+    fontSize: 14,
+  },
+  registerLink: {
+    marginTop: 15,
+    textAlign: "center",
+    color: "#4285F4",
+    fontSize: 15,
+    fontWeight: "500",
+    textDecorationLine: "underline",
+  },
+  logoContainer: {
+    flex: 1, // Toma la otra mitad del espacio
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logo: {
+    width: 250,
+    height: 250,
+    resizeMode: "contain",
+  },
+  disabledButton: {
+    opacity: 0.6,
+  },
+});
