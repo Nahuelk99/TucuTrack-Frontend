@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, db } from "../services/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { useRouter } from "expo-router";
 
 export const useAuth = () => {
   const [user, setUser] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -35,6 +37,8 @@ export const useAuth = () => {
     try {
       await signOut(auth);
       setUser(null);
+      alert("Sesión cerrada", "Has cerrado sesión correctamente.");
+      router.replace("/");
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }
