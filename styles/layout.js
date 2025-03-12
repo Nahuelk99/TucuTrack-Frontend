@@ -3,10 +3,12 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#f5f5f5",
   },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
+    paddingHorizontal: 10,
   },
   userContainer: {
     flexDirection: "row",
@@ -18,9 +20,14 @@ export default StyleSheet.create({
     borderRadius: 20,
     marginRight: 10,
   },
+  userIcon: {
+    marginRight: 5,
+  },
   userName: {
-    marginRight: 15,
+    fontSize: 16,
     fontWeight: "bold",
+    color: "#333",
+    marginRight: 20,
   },
   logoutButton: {
     paddingVertical: 8,

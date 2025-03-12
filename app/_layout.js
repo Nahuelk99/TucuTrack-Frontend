@@ -1,89 +1,86 @@
-import React, { useState, useEffect } from "react";
+// app/_layout.jsx
+import React from "react";
 import { Stack } from "expo-router";
-import { View, TouchableOpacity, Text, Image } from "react-native";
-import { useNavigation } from "expo-router";
-import { auth } from "../services/firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { View } from "react-native";
+import { useAuth } from "../hooks/useAuth";
+import { Header } from "../components/Header";
 import styles from "../styles/layout";
-import About from "../components/About";
 
 export default function Layout() {
-  const navigation = useNavigation();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    // Listener de cambios de autenticación
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-      } else {
-        setUser(null);
-      }
-    });
-
-    // Limpiar el listener cuando el componente se desmonte
-    return () => unsubscribe();
-  }, []);
-
-  // Función para cerrar sesión
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      setUser(null);
-      navigation.navigate("index");
-    } catch (error) {
-      console.error("Error al cerrar sesión:", error);
-    }
-  };
+  const { user, handleLogout } = useAuth();
 
   return (
     <View style={styles.container}>
       {/* Stack de navegación */}
       <Stack
         screenOptions={{
-          headerRight: () => (
-            <View style={styles.headerContainer}>
-              {user ? (
-                // Vista cuando el usuario está logueado
-                <View style={styles.userContainer}>
-                  {user.photoURL && (
-                    <Image
-                      source={{ uri: user.photoURL }}
-                      style={styles.userImage}
-                    />
-                  )}
-                  <Text style={styles.userName}>
-                    {user.displayName || user.email}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={handleLogout}
-                    style={styles.logoutButton}
-                  >
-                    <Text style={styles.logoutButtonText}>Cerrar Sesión</Text>
-                  </TouchableOpacity>
-                </View>
-              ) : (
-                // Vista cuando el usuario NO está logueado
-                <View style={styles.authButtonsContainer}>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate("login")}
-                    style={styles.loginButton}
-                  >
-                    <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate("register")}
-                    style={styles.registerButton}
-                  >
-                    <Text style={styles.registerButtonText}>Registrarse</Text>
-                  </TouchableOpacity>
-                </View>
-              )}
-            </View>
-          ),
+          headerRight: () => <Header user={user} onLogout={handleLogout} />,
         }}
-      />
-      <About />
+      >
+        {/* Página de inicio */}
+        <Stack.Screen
+          name="index"
+          options={{
+            title: "Inicio", // Nombre en español
+          }}
+        />
+
+        {/* Página de registro */}
+        <Stack.Screen
+          name="register"
+          options={{
+            title: "Registro", // Nombre en español
+          }}
+        />
+
+        {/* Página de inicio de sesión */}
+        <Stack.Screen
+          name="login"
+          options={{
+            title: "Iniciar Sesión", // Nombre en español
+          }}
+        />
+
+        {/* Página de seguimiento */}
+        <Stack.Screen
+          name="tracking"
+          options={{
+            title: "Seguimiento", // Nombre en español
+          }}
+        />
+
+        {/* Página de tarifas */}
+        <Stack.Screen
+          name="prices"
+          options={{
+            title: "Tarifas", // Nombre en español
+          }}
+        />
+
+        {/* Página de horarios */}
+        <Stack.Screen
+          name="schedules"
+          options={{
+            title: "Horarios", // Nombre en español
+          }}
+        />
+
+        {/* Página de chat */}
+        <Stack.Screen
+          name="chat"
+          options={{
+            title: "Chat", // Nombre en español
+          }}
+        />
+
+        {/* Página de acerca de */}
+        <Stack.Screen
+          name="about"
+          options={{
+            title: "Acerca de", // Nombre en español
+          }}
+        />
+      </Stack>
     </View>
   );
 }
