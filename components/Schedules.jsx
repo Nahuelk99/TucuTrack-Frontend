@@ -269,6 +269,24 @@ const Schedules = () => {
         placeholder="Selecciona una empresa"
       />
 
+      {/* Tipo de Servicio Picker */}
+      <CustomPicker
+        label="Tipo de Servicio"
+        selectedValue={tipoServicio}
+        onValueChange={(itemValue) => {
+          setTipoServicio(itemValue);
+          setOrigen("");
+          setDestino("");
+          setTipoDia("");
+        }}
+        items={tiposServicioLocal.map((tipo) => ({
+          label: tipo.NombreTipoServicio || tipo.Descripcion,
+          value: tipo.IdTipoServicio.toString(),
+        }))}
+        enabled={!!empresa && !loadingTiposServicio}
+        placeholder="Selecciona un tipo de servicio"
+      />
+
       {/* Ciudad Origen Picker */}
       <CustomPicker
         label="Ciudad Origen"
@@ -276,14 +294,13 @@ const Schedules = () => {
         onValueChange={(itemValue) => {
           setOrigen(itemValue);
           setDestino("");
-          setTipoServicio("");
           setTipoDia("");
         }}
         items={ciudades.map((city) => ({
           label: city.NombreCiudad,
           value: city.IdCiudad.toString(),
         }))}
-        enabled={!!empresa}
+        enabled={!!tipoServicio}
         placeholder="Selecciona una ciudad"
       />
 
@@ -293,7 +310,6 @@ const Schedules = () => {
         selectedValue={destino}
         onValueChange={(itemValue) => {
           setDestino(itemValue);
-          setTipoServicio("");
           setTipoDia("");
         }}
         items={ciudades
@@ -304,22 +320,6 @@ const Schedules = () => {
           }))}
         enabled={!!origen}
         placeholder="Selecciona una ciudad"
-      />
-
-      {/* Tipo de Servicio Picker */}
-      <CustomPicker
-        label="Tipo de Servicio"
-        selectedValue={tipoServicio}
-        onValueChange={(itemValue) => {
-          setTipoServicio(itemValue);
-          setTipoDia("");
-        }}
-        items={tiposServicioLocal.map((tipo) => ({
-          label: tipo.NombreTipoServicio || tipo.Descripcion,
-          value: tipo.IdTipoServicio.toString(),
-        }))}
-        enabled={!!destino && !loadingTiposServicio}
-        placeholder="Selecciona un tipo de servicio"
       />
 
       {/* Tipo de Día Buttons */}
