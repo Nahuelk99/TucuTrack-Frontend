@@ -1,48 +1,72 @@
 // hooks/useAuth.js
 import { useState, useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth, db } from "../services/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { useRouter } from "expo-router";
+import { auth, db } from "../services/firebase";
+
+// Variable global para controlar si estamos en proceso de registro
+let isRegistrationProcess = false;
 
 export const useAuth = () => {
   const [user, setUser] = useState(null);
-  const router = useRouter();
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser) {
-        // Cargar datos adicionales del usuario desde Firestore
-        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-        if (userDoc.exists()) {
-          // Combinar datos de Firebase Authentication con datos de Firestore
-          setUser({
-            ...currentUser, // Datos de Firebase Authentication
-            name: userDoc.data().name, // Nombre desde Firestore
-          });
-        } else {
-          setUser(currentUser); // Usar solo los datos de Firebase Authentication
+      console.log(
+        "Estado de autenticación cambió:",
+        currentUser ? "Usuario autenticado" : "No hay usuario"
+      );
+
+      if (!isRegistrationProcess && currentUser) {
+        try {
+          const userRef = doc(db, "users", currentUser.uid);
+          const userSnap = await getDoc(userRef);
+
+          if (userSnap.exists()) {
+            setUserData({
+              ...currentUser,
+              ...userSnap.data(),
+            });
+          } else {
+            setUserData(currentUser);
+          }
+        } catch (error) {
+          console.error("Error al obtener datos de usuario:", error);
+          setUserData(currentUser);
         }
-      } else {
-        setUser(null); // No hay usuario autenticado
+      } else if (!isRegistrationProcess) {
+        setUserData(null);
       }
+
+      setUser(currentUser);
+      setLoading(false);
     });
 
-    // Limpiar el listener cuando el componente se desmonte
     return () => unsubscribe();
   }, []);
 
-  // Función para cerrar sesión
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      setUser(null);
-      alert("Sesión cerrada", "Has cerrado sesión correctamente.");
-      router.replace("/");
+      console.log("Sesión cerrada manualmente");
+      setUserData(null);
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }
   };
 
-  return { user, handleLogout };
+  // Funciones para controlar el estado de registro
+  const setRegistrationMode = (value) => {
+    isRegistrationProcess = value;
+    console.log("Modo registro:", value ? "ACTIVADO" : "DESACTIVADO");
+  };
+
+  return { user: userData, loading, handleLogout, setRegistrationMode };
+};
+
+// Función auxiliar para usar fuera del hook
+export const markAsRegistrationProcess = (value) => {
+  isRegistrationProcess = value;
 };

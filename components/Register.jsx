@@ -24,6 +24,7 @@ import { auth, db } from "../services/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useRegister } from "../hooks/useRegister";
 import styles from "../styles/register";
+import { markAsRegistrationProcess } from "../hooks/useAuth";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -62,6 +63,10 @@ export default function Register() {
   React.useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response;
+
+      // Activar modo registro antes de iniciar el proceso
+      markAsRegistrationProcess(true);
+
       const credential = GoogleAuthProvider.credential(
         authentication.idToken,
         authentication.accessToken
@@ -80,6 +85,9 @@ export default function Register() {
 
           await signOut(auth); // Cerrar sesión después del registro
 
+          // Desactivar modo registro una vez completado
+          markAsRegistrationProcess(false);
+
           // Mostrar alerta de éxito
           alert("Tu cuenta ha sido creada con Google.");
 
@@ -93,10 +101,13 @@ export default function Register() {
         })
         .catch((error) => {
           console.error("Error en registro con Google:", error);
+          markAsRegistrationProcess(false);
           alert("No se pudo completar el registro con Google.");
           setIsGoogleLoading(false); // Terminar loading en caso de error
         });
     } else if (response?.type === "error" || response?.type === "cancel") {
+      // Desactivar modo registro en caso de cancelación
+      markAsRegistrationProcess(false);
       setIsGoogleLoading(false); // Terminar loading si hay error o cancelación
     }
   }, [response]);

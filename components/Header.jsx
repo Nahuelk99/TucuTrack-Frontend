@@ -9,16 +9,31 @@ export const Header = ({ user, onLogout }) => {
 
   // Obtener el nombre corto del usuario
   const getUserName = () => {
+    if (!user) return "Usuario";
+
     if (user.name) {
       return user.name;
     } else if (user.displayName) {
       return user.displayName;
+    } else if (user.email) {
+      return user.email.split("@")[0];
     }
+
     return "Usuario";
   };
 
   // Obtener la foto de perfil o usar un ícono por defecto
   const getUserImage = () => {
+    if (!user)
+      return (
+        <Ionicons
+          name="person-circle"
+          size={40}
+          color="rgba(0, 0, 0, 0.3)"
+          style={styles.userIcon}
+        />
+      );
+
     if (user.photoURL) {
       return <Image source={{ uri: user.photoURL }} style={styles.userImage} />;
     } else {

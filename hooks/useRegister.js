@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../services/firebase";
+import { markAsRegistrationProcess } from "./useAuth";
 
 export const useRegister = () => {
   const [error, setError] = useState("");
@@ -49,6 +50,9 @@ export const useRegister = () => {
     setError("");
     setLoading(true);
 
+    // Activamos el modo registro antes de crear la cuenta
+    markAsRegistrationProcess(true);
+
     try {
       // Primero validar el formulario
       const validationError = validateFormData(
@@ -91,6 +95,9 @@ export const useRegister = () => {
         console.log("Sesión cerrada con éxito");
       } catch (signOutError) {
         console.error("Error al cerrar sesión:", signOutError);
+      } finally {
+        // Desactivamos el modo registro una vez completado todo el proceso
+        markAsRegistrationProcess(false);
       }
 
       setLoading(false);
@@ -113,6 +120,8 @@ export const useRegister = () => {
           errorMessage = "Hubo un problema al registrar tu cuenta";
       }
 
+      // En caso de error también desactivamos el modo registro
+      markAsRegistrationProcess(false);
       setError(errorMessage);
       setLoading(false);
       return { success: false, firebaseError: error.code };
